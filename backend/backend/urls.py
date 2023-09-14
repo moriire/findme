@@ -4,6 +4,7 @@ from rest_framework.routers import DefaultRouter
 from user.views import UserView
 from bio.views import BioView
 from social.views import SocialView
+from main.views import MainView
 from django.views.decorators.cache import cache_page
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
@@ -26,6 +27,7 @@ d_router = DefaultRouter()
 d_router.register("user", UserView)
 d_router.register("bio", BioView)
 d_router.register("social", SocialView)
+d_router.register("main", MainView)
 
 urlpatterns = [
     path('admin/', admin.site.urls),

@@ -1,4 +1,5 @@
 from django.db import models
+from user.models import User
 class Social(models.Model):
     SOCIAL = (
         ("facebook", "facebook"),
@@ -6,6 +7,7 @@ class Social(models.Model):
         ("instagram", "instagram"),
         ("twitter", "twitter")
     )
+    user = models.ForeignKey(User, related_name="user_social", on_delete=models.CASCADE)
     name = models.CharField(max_length=12, choices=SOCIAL)
     url = models.URLField()
     def __str__(self) -> str:

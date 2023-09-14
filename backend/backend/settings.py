@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "user",
     "bio",
     "social",
+    "main",
     "drf_yasg"
 ]
 

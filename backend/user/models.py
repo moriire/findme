@@ -12,8 +12,8 @@ from django.utils.itercompat import is_iterable
 from django.utils.translation import gettext_lazy as _
 
 from django.contrib.auth.validators import UnicodeUsernameValidator
-from social.models import Social
-from bio.models import Bio
+#from social.models import Social
+#from bio.models import Bio
 
 def update_last_login(sender, user, **kwargs):
     """
@@ -350,8 +350,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(_("first name"), max_length=150, blank=True)
     last_name = models.CharField(_("last name"), max_length=150, blank=True)
     email = models.EmailField(_("email address"), blank=True)
-    social = models.ManyToManyField(Social, related_name="social_user", blank=True, null=True)
-    bio = models.ForeignKey(Bio, related_name="bio_user", on_delete=models.CASCADE, blank=True, null=True)
+    #social = models.ManyToManyField(Social, related_name="social_user", blank=True, null=True)
+    #bio = models.ForeignKey(Bio, related_name="bio_user", on_delete=models.CASCADE, blank=True, null=True)
     is_staff = models.BooleanField(
         _("staff status"),
         default=False,
