@@ -1,3 +1,3 @@
 Django
-django-graphene
+graphene-django
 gunicorn
