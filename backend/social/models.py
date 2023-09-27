@@ -1,4 +1,5 @@
 from django.db import models
+from graphene_django import DjangoObjectType
 from user.models import User
 class Social(models.Model):
     SOCIAL = (
@@ -12,7 +13,6 @@ class Social(models.Model):
     url = models.URLField()
     def __str__(self) -> str:
         return self.url
-    
 
 from rest_framework.serializers import ModelSerializer
 class SocialSerializer(ModelSerializer):

@@ -6,6 +6,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import PermissionDenied
 from django.core.mail import send_mail
 from django.db import models
+from graphene_django import DjangoObjectType
 from django.db.models.manager import EmptyManager
 from django.utils import timezone
 from django.utils.itercompat import is_iterable
@@ -34,7 +35,6 @@ class PermissionManager(models.Manager):
                 app_label, model
             ),
         )
-
 
 class Permission(models.Model):
     """
@@ -90,7 +90,6 @@ class GroupManager(models.Manager):
     """
     The manager for the auth's Group model.
     """
-
     use_in_migrations = True
 
     def get_by_natural_key(self, name):
@@ -331,10 +330,8 @@ class PermissionsMixin(models.Model):
 
         return _user_has_module_perms(self, app_label)
 
-
 class User(AbstractBaseUser, PermissionsMixin):
     username_validator = UnicodeUsernameValidator()
-
     username = models.CharField(
         _("username"),
         max_length=150,
@@ -350,8 +347,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(_("first name"), max_length=150, blank=True)
     last_name = models.CharField(_("last name"), max_length=150, blank=True)
     email = models.EmailField(_("email address"), blank=True)
-    #social = models.ManyToManyField(Social, related_name="social_user", blank=True, null=True)
-    #bio = models.ForeignKey(Bio, related_name="bio_user", on_delete=models.CASCADE, blank=True, null=True)
     is_staff = models.BooleanField(
         _("staff status"),
         default=False,
@@ -396,11 +391,3 @@ class User(AbstractBaseUser, PermissionsMixin):
     def email_user(self, subject, message, from_email=None, **kwargs):
         """Send an email to this user."""
         send_mail(subject, message, from_email, [self.email], **kwargs)
-
-
-
-from rest_framework.serializers import ModelSerializer
-class UserSerializer(ModelSerializer):
-    class Meta:
-        model = User
-        fields = ["username",  "email", "password"]#"__all__"
