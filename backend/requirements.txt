@@ -1,4 +1,4 @@
 Django
 tzdata==2023.3
-django-graphene
+django-graphene==3.1.5
 gunicorn
