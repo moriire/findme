@@ -1,5 +1,5 @@
 Django
-django-corsheaders
+django-cors-headers
 graphene-django
 whitenoise
 gunicorn
