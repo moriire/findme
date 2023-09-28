@@ -1,4 +1,5 @@
 Django
+django-corsheaders
 graphene-django
 whitenoise
 gunicorn
