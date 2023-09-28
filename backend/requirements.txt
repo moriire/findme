@@ -2,6 +2,6 @@ Django
 django-cors-headers
 graphene-django
 django-graphql-jwt
-'chanels[daphne]'
+channels[daphne]
 whitenoise
 gunicorn
