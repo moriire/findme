@@ -1,5 +1,7 @@
 Django
 django-cors-headers
 graphene-django
+django-graphql-jwt
+chanels[daphne]
 whitenoise
 gunicorn
