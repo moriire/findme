@@ -94,10 +94,42 @@ class DeleteUser(graphene.Mutation):
         user = User.objects.get(id=id)
         user.delete()
         return DeleteUser(deleted = True, user=user)
+
+
+class CreateUserBio(graphene.Mutation):
+    created = graphene.Boolean()
+    user_bio = graphene.Field(BioType)
+    class Arguments:
+        body  =  graphene.String()
+        user_id = graphene.Int()
+
+    def mutate(self, info, user_id, body):
+        user = User.objects.get(id = user_id)
+        user_bio = Bio(
+            user = user,
+            body=body
+        )
+        user_bio.save()
+        return CreateUserBio(created = True, user_bio=user_bio)
+    
+class UpdateUserBio(graphene.Mutation):
+    updated = graphene.Boolean()
+    bio = graphene.Field(BioType)
+    class Arguments:
+        id = graphene.Int()
+        body = graphene.String()
+        user_id = graphene.Int()
         
+    def mutate(self, info, user_id, body):
+        user = User.objects.get(id=user_id)
+        user.body = body
+        user.save()
+        return UpdateUserBio(updated=True, user=user)
 class Mutation(graphene.ObjectType):
     create_user = CreateUser.Field()
     update_user = UpdateUser.Field()
     delete_user = DeleteUser.Field()
+    create_user_bio = CreateUserBio.Field()
+    update_user_bio = UpdateUserBio.Field()
 
 schema = graphene.Schema(query=Query, mutation=Mutation)
