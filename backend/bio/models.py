@@ -3,6 +3,7 @@ from user.models import User
 class Bio(models.Model):
     user = models.OneToOneField(User, related_name="user_bio", on_delete=models.CASCADE)
     body = models.TextField()
+    img = models.ImageField(blank=True)
     created_on = models.DateTimeField(auto_now=True)
 
     def __str__(self):

@@ -3,7 +3,7 @@ from graphene_django import DjangoObjectType
 from bio.models import Bio#, BioType
 from user.models import User#, UserType
 from social.models import Social#, SocialType
-
+from graphene_file_upload.scalars import Upload
 class UserType(DjangoObjectType):
     class Meta:
         model = User
@@ -13,7 +13,8 @@ class BioType(DjangoObjectType):
         model = Bio
         fields = (
             "user",
-            "body"
+            "body",
+            "img"
         )
 
 class SocialType(DjangoObjectType):
@@ -22,12 +23,13 @@ class SocialType(DjangoObjectType):
         fields = "__all__"  
 
 class Query(graphene.ObjectType):
-    users = graphene.List(UserType)
+    all_users = graphene.List(UserType)
     user_by_username = graphene.Field(UserType, username = graphene.String(required=True))
-    bios = graphene.List(BioType)
+    all_bios = graphene.List(BioType)
+    bio_by_id = graphene.Field(BioType, id = graphene.Int(required=True))
     socials = graphene.List(SocialType)
 
-    def resolve_users(root, info):
+    def resolve_all_users(root, info):
         return User.objects.all()
     
     def resolve_user_by_username(root, info, username):
@@ -36,21 +38,18 @@ class Query(graphene.ObjectType):
         except User.DoesNotExist:
             return None
         
-    def resolve_bios_by_id(root, info, id):
+    def resolve_bio_by_id(root, info, id):
         try:
             return Bio.objects.get(id=id)
         except Bio.DoesNotExist:
             return None
         
-    def resolve_bios(root, info):
+    def resolve_all_bios(root, info):
         return Bio.objects.all()
     
     def resolve_socials(root, info):
         return Social.objects.all()
 
-    def resolve_all_bio(root, info):
-        return Bio.objects.all()#select_related("user").all()
-    
 class CreateUser(graphene.Mutation):
     class Arguments:
         username = graphene.String(required=True)
@@ -102,6 +101,7 @@ class CreateUserBio(graphene.Mutation):
     class Arguments:
         body  =  graphene.String()
         user_id = graphene.Int()
+        img = Upload()
 
     def mutate(self, info, user_id, body):
         user = User.objects.get(id = user_id)
@@ -119,6 +119,7 @@ class UpdateUserBio(graphene.Mutation):
         id = graphene.Int()
         body = graphene.String()
         user_id = graphene.Int()
+        img = Upload()
         
     def mutate(self, info, user_id, body):
         user = User.objects.get(id=user_id)
