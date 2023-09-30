@@ -5,3 +5,4 @@ django-graphql-jwt
 #channels[daphne]
 whitenoise
 gunicorn
+pillow
