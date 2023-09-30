@@ -19,7 +19,7 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
-    "daphne",
+    #"daphne",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -65,7 +65,7 @@ TEMPLATES = [
     },
 ]
 
-ASGI_APPLICATION = 'backend.asgi.application'
+WSGI_APPLICATION = 'backend.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
@@ -127,7 +127,7 @@ GRAPHENE = {
     "ATOMIC_MUTATIONS": True,
 }
 # CORS
-CORS_ALLOW_ALL_ORIGINS = False  # was initially True
+CORS_ALLOW_ALL_ORIGINS = True  # was initially True
 CORS_ALLOW_HEADERS = "*"
 
 CORS_ALLOW_CREDENTIALS = True

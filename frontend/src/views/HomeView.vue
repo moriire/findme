@@ -1,30 +1,85 @@
-<script setup>
-//import TheWelcome from '../components/TheWelcome.vue'
+<script>
+import gql from "graphql-tag";
+import { useQuery } from "@vue/apollo-composable";
+
+const USERS_QUERY = gql`query {
+	bios {
+		body
+		user{
+			id
+        	username
+		}
+    }
+  }`;
+export default {
+  name: 'HomeView',
+  setup () {
+    const { result, loading, error } = useQuery(USERS_QUERY);
+    //console.log(result)
+	return {
+      result,
+      loading, 
+      error
+    }
+  }
+}
 </script>
 
-<template>	
-	<header id="fh5co-header" class="fh5co-cover js-fullheight" role="banner" style="background-image:url(src/assets/images/cover_bg_3.jpg);" data-stellar-background-ratio="0.5">
-		<div class="overlay"></div>
-		<div class="container">
-			<div class="row">
-				<div class="col-md-8 col-md-offset-2 text-center">
-					<div class="display-t js-fullheight">
-						<div class="display-tc js-fullheight animate-box" data-animate-effect="fadeIn">
-							<div class="profile-thumb" style="background: url(/src/assets/images/user-3.jpg);"></div>
-							<h1><span>Louie Jie Mahusay</span></h1>
-							<h3><span>Web Developer / Photographer</span></h3>
-							<p>
-								<ul class="fh5co-social-icons">
-									<li><a href="#"><i class="icon-twitter2"></i></a></li>
-									<li><a href="#"><i class="icon-facebook2"></i></a></li>
-									<li><a href="#"><i class="icon-linkedin2"></i></a></li>
-									<li><a href="#"><i class="icon-dribbble2"></i></a></li>
-								</ul>
-							</p>
-						</div>
-					</div>
-				</div>
+<template>
+<div class="q-pa-md row justify-center">
+	<div class="col-lg-8 col-md-10">
+
+	
+	<q-circular-progress
+			
+			font-size="12px"
+			v-if="loading"
+			size="50px"
+			:thickness="0.22"
+			color="teal"
+			track-color="grey-3"
+			class="q-ma-md"
+			>
+      loading...
+    </q-circular-progress>
+	  <q-list bordered v-else>
+		<q-separator />
+		<q-item clickable v-ripple v-for="user in result.bios">
+			
+		  <q-item-section thumbnail >
+
+			<img src="https://cdn.quasar.dev/img/mountains.jpg" class="showcase">
+		  </q-item-section>
+		  <q-item-section class="align-start">
+			<div class="column">
+				<h3>
+					{{ user.user.username }}
+				</h3>
+				<p>{{ user.body }}</p>
 			</div>
-		</div>
-	</header>
-</template>
+			
+		</q-item-section>
+		</q-item>
+	  </q-list>
+	</div>
+	</div>
+  </template>
+  <style scoped>
+  img.showcase{
+			width: 150px;
+			height: 150px;
+		}
+
+		@media only screen and (min-width: 500px) {
+		img.showcase{
+			width: 800px;
+			height: 200px;
+		}
+	}
+	@media only screen and (min-width: 820px) {
+		img.showcase{
+			width: 300px;
+			height: 300px;
+		}
+	}
+</style>
