@@ -4,6 +4,7 @@ from bio.models import Bio#, BioType
 from user.models import User#, UserType
 from social.models import Social#, SocialType
 from graphene_file_upload.scalars import Upload
+import graphql_jwt
 class UserType(DjangoObjectType):
     class Meta:
         model = User
@@ -49,7 +50,6 @@ class Query(graphene.ObjectType):
     
     def resolve_socials(root, info):
         return Social.objects.all()
-
 class CreateUser(graphene.Mutation):
     class Arguments:
         username = graphene.String(required=True)
@@ -69,7 +69,7 @@ class UpdateUser(graphene.Mutation):
     user = graphene.Field(UserType)
     updated = graphene.Boolean()
     class Arguments:
-        id = graphene.Int()
+        id = graphene.ID()
         username = graphene.String()
         first_name = graphene.String()
         last_name = graphene.String()
@@ -93,8 +93,6 @@ class DeleteUser(graphene.Mutation):
         user = User.objects.get(id=id)
         user.delete()
         return DeleteUser(deleted = True, user=user)
-
-
 class CreateUserBio(graphene.Mutation):
     created = graphene.Boolean()
     user_bio = graphene.Field(BioType)
@@ -121,12 +119,21 @@ class UpdateUserBio(graphene.Mutation):
         user_id = graphene.Int()
         img = Upload()
         
-    def mutate(self, info, user_id, body):
+    def mutate(self, info, user_id, body, img=None):
         user = User.objects.get(id=user_id)
         user.body = body
+        match img:
+            case None: pass
+            case _:
+                if user.img:
+                    user.img.delete()
+                user.img = img
         user.save()
         return UpdateUserBio(updated=True, user=user)
 class Mutation(graphene.ObjectType):
+    token_auth = graphql_jwt.ObtainJSONWebToken.Field()
+    verify_token = graphql_jwt.Verify.Field()
+    refresh_token = graphql_jwt.Refresh.Field()
     create_user = CreateUser.Field()
     update_user = UpdateUser.Field()
     delete_user = DeleteUser.Field()

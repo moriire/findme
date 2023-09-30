@@ -125,7 +125,15 @@ AUTH_USER_MODEL = "user.User"
 GRAPHENE = {
     "SCHEMA": "backend.schema.schema",
     "ATOMIC_MUTATIONS": True,
+    "MIDDLEWARE": [
+        "graphql_jwt.middleware.JSONWebTokenMiddleware",
+    ],
 }
+
+AUTHENTICATION_BACKENDS = [
+    "graphql_jwt.backends.JSONWebTokenBackend",
+    "django.contrib.auth.backends.ModelBackend",
+]
 # CORS
 CORS_ALLOW_ALL_ORIGINS = True  # was initially True
 CORS_ALLOW_HEADERS = "*"
