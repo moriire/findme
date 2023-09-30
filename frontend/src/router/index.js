@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import RegisterView from '../views/RegisterView.vue'
+import LoginView from '../views/LoginView.vue'
 import ProfileView from '../views/ProfileView.vue'
 import EditProfileView from "../views/EditProfileView.vue"
 const router = createRouter({
@@ -14,6 +16,16 @@ const router = createRouter({
       path: '/<user_id>',
       name: 'profile',
       component: ProfileView
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: LoginView
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: RegisterView
     },
     {
       path: '/<user_id>/edit',
