@@ -1189,3 +1189,50 @@ Traceback (most recent call last):
   File "/mnt/c/Users/USER/Desktop/web/findme/.ubuntu/lib/python3.8/site-packages/gunicorn/arbiter.py", line 530, in reap_workers
     raise HaltServer(reason, self.WORKER_BOOT_ERROR)
 gunicorn.errors.HaltServer: <HaltServer 'Worker failed to boot.' 3>
+[2023-10-01 17:05:35 +0000] [11244] [INFO] Starting gunicorn 21.2.0
+[2023-10-01 17:05:35 +0000] [11244] [INFO] Listening at: http://127.0.0.1:8000 (11244)
+[2023-10-01 17:05:35 +0000] [11244] [INFO] Using worker: sync
+[2023-10-01 17:05:35 +0000] [11248] [INFO] Booting worker with pid: 11248
+[2023-10-01 17:05:35 +0000] [11249] [INFO] Booting worker with pid: 11249
+[2023-10-01 17:05:35 +0000] [11256] [INFO] Booting worker with pid: 11256
+127.0.0.1 - - [01/Oct/2023:17:05:40 +0000] "GET / HTTP/1.1" 302 0 "-" "Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101 Firefox/102.0"
+127.0.0.1 - - [01/Oct/2023:17:05:40 +0000] "GET /graphql HTTP/1.1" 200 2516 "-" "Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101 Firefox/102.0"
+127.0.0.1 - - [01/Oct/2023:17:05:41 +0000] "GET /static/graphene_django/graphiql.js HTTP/1.1" 200 0 "http://127.0.0.1:8000/graphql" "Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101 Firefox/102.0"
+127.0.0.1 - - [01/Oct/2023:17:05:47 +0000] "POST /graphql HTTP/1.1" 200 33207 "http://127.0.0.1:8000/graphql" "Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101 Firefox/102.0"
+127.0.0.1 - - [01/Oct/2023:17:05:47 +0000] "GET /favicon.ico HTTP/1.1" 404 179 "http://127.0.0.1:8000/graphql" "Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101 Firefox/102.0"
+[2023-10-01 17:05:57 +0000] [11414] [INFO] Starting gunicorn 21.2.0
+
+Error: Already running on PID 11244 (or pid file 'gunicorn/dev.pid' is stale)
+
+127.0.0.1 - - [01/Oct/2023:17:06:00 +0000] "GET /graphql HTTP/1.1" 200 2516 "-" "Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101 Firefox/102.0"
+127.0.0.1 - - [01/Oct/2023:17:06:00 +0000] "POST /graphql HTTP/1.1" 200 33207 "http://127.0.0.1:8000/graphql" "Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101 Firefox/102.0"
+127.0.0.1 - - [01/Oct/2023:17:06:01 +0000] "GET /graphql HTTP/1.1" 200 2516 "-" "Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101 Firefox/102.0"
+127.0.0.1 - - [01/Oct/2023:17:06:02 +0000] "POST /graphql HTTP/1.1" 200 33207 "http://127.0.0.1:8000/graphql" "Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101 Firefox/102.0"
+127.0.0.1 - - [01/Oct/2023:17:06:03 +0000] "GET /graphql HTTP/1.1" 200 2516 "-" "Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101 Firefox/102.0"
+127.0.0.1 - - [01/Oct/2023:17:06:03 +0000] "POST /graphql HTTP/1.1" 200 33207 "http://127.0.0.1:8000/graphql" "Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101 Firefox/102.0"
+127.0.0.1 - - [01/Oct/2023:17:06:07 +0000] "GET /graphql HTTP/1.1" 200 2516 "-" "Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101 Firefox/102.0"
+127.0.0.1 - - [01/Oct/2023:17:06:07 +0000] "POST /graphql HTTP/1.1" 200 33207 "http://127.0.0.1:8000/graphql" "Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101 Firefox/102.0"
+127.0.0.1 - - [01/Oct/2023:17:06:09 +0000] "POST /graphql HTTP/1.1" 400 95 "http://127.0.0.1:8000/graphql" "Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101 Firefox/102.0"
+127.0.0.1 - - [01/Oct/2023:17:06:14 +0000] "GET /graphql HTTP/1.1" 200 2516 "-" "Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101 Firefox/102.0"
+127.0.0.1 - - [01/Oct/2023:17:06:15 +0000] "POST /graphql HTTP/1.1" 200 33207 "http://127.0.0.1:8000/graphql" "Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101 Firefox/102.0"
+[2023-10-01 17:07:03 +0000] [11244] [CRITICAL] WORKER TIMEOUT (pid:11248)
+[2023-10-01 17:07:03 +0000] [11248] [INFO] Worker exiting (pid: 11248)
+[2023-10-01 17:07:04 +0000] [11244] [ERROR] Worker (pid:11248) exited with code 1
+[2023-10-01 17:07:04 +0000] [11244] [ERROR] Worker (pid:11248) exited with code 1.
+[2023-10-01 17:07:04 +0000] [11855] [INFO] Booting worker with pid: 11855
+127.0.0.1 - - [01/Oct/2023:17:07:13 +0000] "GET / HTTP/1.1" 302 0 "-" "Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101 Firefox/102.0"
+127.0.0.1 - - [01/Oct/2023:17:07:13 +0000] "GET /graphql HTTP/1.1" 200 2516 "-" "Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101 Firefox/102.0"
+127.0.0.1 - - [01/Oct/2023:17:07:14 +0000] "GET /static/graphene_django/graphiql.js HTTP/1.1" 304 0 "http://127.0.0.1:8000/graphql" "Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101 Firefox/102.0"
+127.0.0.1 - - [01/Oct/2023:17:07:14 +0000] "POST /graphql HTTP/1.1" 200 33207 "http://127.0.0.1:8000/graphql" "Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101 Firefox/102.0"
+127.0.0.1 - - [01/Oct/2023:17:11:05 +0000] "GET /graphql HTTP/1.1" 200 2516 "-" "Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101 Firefox/102.0"
+127.0.0.1 - - [01/Oct/2023:17:20:33 +0000] "GET / HTTP/1.1" 302 0 "-" "Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101 Firefox/102.0"
+127.0.0.1 - - [01/Oct/2023:17:20:33 +0000] "GET /graphql HTTP/1.1" 200 2516 "-" "Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101 Firefox/102.0"
+127.0.0.1 - - [01/Oct/2023:17:20:34 +0000] "GET /static/graphene_django/graphiql.js HTTP/1.1" 304 0 "http://127.0.0.1:8000/graphql" "Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101 Firefox/102.0"
+127.0.0.1 - - [01/Oct/2023:17:20:34 +0000] "POST /graphql HTTP/1.1" 200 33207 "http://127.0.0.1:8000/graphql" "Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101 Firefox/102.0"
+127.0.0.1 - - [01/Oct/2023:17:27:52 +0000] "GET / HTTP/1.1" 302 0 "-" "Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101 Firefox/102.0"
+127.0.0.1 - - [01/Oct/2023:17:27:52 +0000] "GET /graphql HTTP/1.1" 200 2516 "-" "Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101 Firefox/102.0"
+127.0.0.1 - - [01/Oct/2023:17:27:53 +0000] "GET /static/graphene_django/graphiql.js HTTP/1.1" 304 0 "http://127.0.0.1:8000/graphql" "Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101 Firefox/102.0"
+127.0.0.1 - - [01/Oct/2023:17:27:53 +0000] "POST /graphql HTTP/1.1" 200 33207 "http://127.0.0.1:8000/graphql" "Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101 Firefox/102.0"
+127.0.0.1 - - [01/Oct/2023:17:36:48 +0000] "GET /graphql HTTP/1.1" 200 2516 "-" "Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101 Firefox/102.0"
+127.0.0.1 - - [01/Oct/2023:17:36:48 +0000] "GET /static/graphene_django/graphiql.js HTTP/1.1" 304 0 "http://127.0.0.1:8000/graphql" "Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101 Firefox/102.0"
+127.0.0.1 - - [01/Oct/2023:17:36:48 +0000] "POST /graphql HTTP/1.1" 200 33207 "http://127.0.0.1:8000/graphql" "Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101 Firefox/102.0"
