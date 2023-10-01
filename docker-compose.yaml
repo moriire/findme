@@ -1,6 +1,11 @@
 services:
-  web: 
+  backend: 
     build:
       context: backend
+      
+    volumes:
+      - backend:/backend
     ports: 
       - '8000:8001'
+volumes:
+  backend:
