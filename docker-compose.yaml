@@ -2,10 +2,26 @@ services:
   backend: 
     build:
       context: backend
-      
     volumes:
       - backend:/backend
     ports: 
       - '8000:8001'
+      
+  frontend:
+    build:
+      context: frontend
+    ports:
+      - '8080:8080'
+    volumes:
+      - frontend:/frontend
+ 
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: findme-pass
+      POSTGRES_USER: findme-user
+      
 volumes:
   backend:
+  frontend:
