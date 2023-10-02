@@ -1236,3 +1236,22 @@ Error: Already running on PID 11244 (or pid file 'gunicorn/dev.pid' is stale)
 127.0.0.1 - - [01/Oct/2023:17:36:48 +0000] "GET /graphql HTTP/1.1" 200 2516 "-" "Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101 Firefox/102.0"
 127.0.0.1 - - [01/Oct/2023:17:36:48 +0000] "GET /static/graphene_django/graphiql.js HTTP/1.1" 304 0 "http://127.0.0.1:8000/graphql" "Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101 Firefox/102.0"
 127.0.0.1 - - [01/Oct/2023:17:36:48 +0000] "POST /graphql HTTP/1.1" 200 33207 "http://127.0.0.1:8000/graphql" "Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101 Firefox/102.0"
+[2023-10-01 20:50:57 +0000] [11244] [ERROR] Worker (pid:11249) was sent SIGHUP!
+[2023-10-01 20:50:59 +0000] [11244] [ERROR] Worker (pid:11256) was sent SIGHUP!
+[2023-10-01 20:50:59 +0000] [11244] [ERROR] Worker (pid:11855) was sent SIGHUP!
+[2023-10-01 20:51:00 +0000] [11244] [INFO] Handling signal: hup
+[2023-10-01 20:51:00 +0000] [11244] [INFO] Hang up: Master
+[2023-10-01 20:51:00 +0000] [100776] [INFO] Booting worker with pid: 100776
+[2023-10-01 20:51:00 +0000] [100775] [INFO] Booting worker with pid: 100775
+[2023-10-01 20:51:00 +0000] [100774] [INFO] Booting worker with pid: 100774
+[2023-10-01 20:51:03 +0000] [100777] [INFO] Booting worker with pid: 100777
+[2023-10-01 20:51:03 +0000] [100778] [INFO] Booting worker with pid: 100778
+[2023-10-01 20:51:03 +0000] [11244] [INFO] Handling signal: term
+[2023-10-01 20:51:03 +0000] [100779] [INFO] Booting worker with pid: 100779
+[2023-10-01 20:51:15 +0000] [100775] [INFO] Worker exiting (pid: 100775)
+[2023-10-01 20:51:15 +0000] [100774] [INFO] Worker exiting (pid: 100774)
+[2023-10-01 20:51:15 +0000] [100779] [INFO] Worker exiting (pid: 100779)
+[2023-10-01 20:51:15 +0000] [100776] [INFO] Worker exiting (pid: 100776)
+[2023-10-01 20:51:15 +0000] [100778] [INFO] Worker exiting (pid: 100778)
+[2023-10-01 20:51:15 +0000] [100777] [INFO] Worker exiting (pid: 100777)
+[2023-10-01 20:51:16 +0000] [11244] [INFO] Shutting down: Master

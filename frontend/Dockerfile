@@ -1,7 +1,7 @@
 
 FROM node:18-alpine as build
-WORKDIR frontend/
-COPY ./package*.json package.json
+WORKDIR frontend
+COPY ./package*.json .
 
 RUN yarn install
 COPY . .
