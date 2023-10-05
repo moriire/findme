@@ -6,8 +6,11 @@ from user.models import User
 @receiver(post_save, sender=User)
 def create_user_bio(sender, instance, created, **kwargs):
     if created:
-        Bio.objects.create(user=instance)
-
+        bio = Bio.objects.create(user=instance)
+        bio.save()
+"""
 @receiver(post_save, sender=User)
 def save_user_bio(sender, instance, **kwargs):
+    Bio()
     instance.bio.save()
+"""

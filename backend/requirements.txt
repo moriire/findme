@@ -6,5 +6,6 @@ django-graphql-jwt
 whitenoise
 gunicorn
 graphene-file-upload
+graphene-django-extras
 pillow
 django-graphql-jwt

@@ -31,7 +31,6 @@
 				label="Your Email *"
 				hint="Enter a valid email"
 				lazy-rules
-				:rules="[ val => val && val.length > 0 || 'Please type something']"
 				/>
 		
 				
@@ -50,23 +49,18 @@
 				filled
 				type="password"
 				v-model="password"
-				label="Your DOB *"
-				lazy-rules
-				:rules="[
-					val => val !== null && val !== '' || 'Please type your age',
-					val => val > 0 && val < 100 || 'Please type a real age'
-				]"
-				/>
-				<q-input
-				filled
-				type="password"
-				v-model="password1"
 				label="Password *"
 				lazy-rules
 				:rules="[
 					val => val !== null && val !== '' || 'Please type your age',
-					val => val > 0 && val < 100 || 'Please type a real age'
-				]"
+					]"
+				/>
+				<q-input
+				filled
+				type="password"
+				v-model="password"
+				label="Confirm Password *"
+				
 				/>
 				<q-toggle v-model="accept" label="I accept the license and terms" />
 		

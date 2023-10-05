@@ -7,4 +7,4 @@ class Bio(models.Model):
     created_on = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"{self.created_on}"
+        return f"{self.user.username}"

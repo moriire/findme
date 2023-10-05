@@ -1,5 +1,5 @@
 from pathlib import Path
-
+from datetime import timedelta
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -21,6 +21,7 @@ ALLOWED_HOSTS = ["*"]
 INSTALLED_APPS = [
     #"daphne",
     'django.contrib.admin',
+    'django.contrib.sites',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -32,6 +33,8 @@ INSTALLED_APPS = [
     "bio.apps.BioConfig",
     "social.apps.SocialConfig",
     "graphene_django",
+    "graphql_jwt",
+    #"graphql_jwt.refresh_token",
     
 ]
 
@@ -42,6 +45,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    #'graphql_jwt.middleware.JSONWebTokenMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "whitenoise.middleware.WhiteNoiseMiddleware",
@@ -130,13 +134,23 @@ GRAPHENE = {
     ],
 }
 
+
+
+GRAPHQL_JWT = {
+    'JWT_ALLOW_ANY_CLASSES': [
+        'graphql_jwt.refresh_token.models.RefreshToken',
+    ],
+    'JWT_ALLOW_REFRESH': True,
+    'JWT_REFRESH_EXPIRATION_DELTA': timedelta(days=7),
+}
+
 AUTHENTICATION_BACKENDS = [
     "graphql_jwt.backends.JSONWebTokenBackend",
     "django.contrib.auth.backends.ModelBackend",
 ]
 # CORS
-CORS_ALLOW_ALL_ORIGINS = True  # was initially True
-CORS_ALLOW_HEADERS = "*"
+CORS_ALLOW_ALL_ORIGINS = True
+#CORS_ALLOW_HEADERS = "*"
 
 CORS_ALLOW_CREDENTIALS = True
 
@@ -152,15 +166,17 @@ CORS_ALLOW_HEADERS = [
     "x-csrftoken",
     "x-requested-with",
 ]
-
+"""
 CORS_ALLOWED_ORIGIN = {
     
     "http://127.0.0.1:5173",
     "http://localhost:5173",
 
 }
-CORS_ALLOW_HEADERS = "*"
+"""
+#CORS_ALLOW_HEADERS = "*"
 CORS_ORIGIN_WHITELIST = [
     'http://127.0.0.1:5173',
      "http://localhost:5173",
 ]
+SITE_ID = 1

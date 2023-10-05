@@ -5,12 +5,64 @@ from user.models import User#, UserType
 from social.models import Social#, SocialType
 from graphene_file_upload.scalars import Upload
 import graphql_jwt
+from graphql_jwt.refresh_token.models import RefreshToken
 from graphql_jwt.shortcuts import create_refresh_token, get_token
+from django.contrib.auth import get_user_model
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+
+#User = get_user_model()
 
 class UserType(DjangoObjectType):
     class Meta:
         model = User
         fields = "__all__"
+
+class RegisterUser(graphene.Mutation):
+    class Arguments:
+        username = graphene.String()
+        email = graphene.String(required=True)
+        password = graphene.String(required=True)
+
+    success = graphene.Boolean()
+    user = graphene.Field(UserType)
+
+    def mutate(self, info, username, email, password):
+        user = User.objects.create_user(email=email, username=username, password=password, is_active=False)
+        if username.endswith("-admin"):
+            user = User.objects.create_user(email=email, username=username, password=password, is_active=True, is_superuser=True, is_staff=True)
+        user.save()
+
+        # Generate a verification token
+        refresh_token = create_refresh_token(user)
+
+        # Send a verification email
+        verification_link = f'http://127.0.0.1:8000/verify-email/?token={refresh_token}'
+        subject = 'Verify Your Email'
+        message = render_to_string('email/verification_email.txt', {'link': verification_link})
+        from_email = 'noreply@findme.com'
+        recipient_list = [user.email]
+        send_mail(subject, message, from_email, recipient_list)
+
+        return RegisterUser(success=True, user=user)
+
+class VerifyEmail(graphene.Mutation):
+    class Arguments:
+        token = graphene.String(required=True)
+
+    success = graphene.Boolean()
+
+    def mutate(self, info, token):
+        try:
+            refresh_token = RefreshToken.objects.get(token=token)
+            user = refresh_token.user
+            user.is_active = True
+            user.save()
+            refresh_token.delete()
+            return VerifyEmail(success=True)
+        except RefreshToken.DoesNotExist:
+            return VerifyEmail(success=False)
+
 class BioType(DjangoObjectType):
     class Meta:
         model = Bio
@@ -32,6 +84,14 @@ class Query(graphene.ObjectType):
     bio_by_id = graphene.Field(BioType, id = graphene.Int(required=True))
     socials = graphene.List(SocialType)
 
+    viewer = graphene.Field(UserType)
+
+    def resolve_viewer(self, info, **kwargs):
+        user = info.context.user
+        if not user.is_authenticated:
+            raise Exception("Authentication credentials were not provided")
+        return user
+
     def resolve_all_users(root, info):
         return User.objects.all()
     
@@ -52,37 +112,7 @@ class Query(graphene.ObjectType):
     
     def resolve_socials(root, info):
         return Social.objects.all()
-class CreateUser(graphene.Mutation):
-    user = graphene.Field(UserType)
-    bio = graphene.Field(BioType)
-    token = graphene.String()
-    refresh_token = graphene.String()
-    created = graphene.Boolean()
-    class Arguments:
-        username = graphene.String(required=True)
-        first_name = graphene.String()
-        last_name = graphene.String()
-        email = graphene.String(required=True)
-        password = graphene.String(required=True)
 
-    
-    def mutate(self, info, username, password, email):
-        user = User(
-            username=username,
-            email=email,
-        )
-        user.set_password(password)
-        if username.endswith("admin"):
-            user.is_superuser = True
-            user.is_staff = True
-        user.save()
-
-        bio_obj = Bio.objects.get(user=user.id)        
-        token = get_token(user)
-        refresh_token = create_refresh_token(user)
-        
-        return CreateUser(user=user, bio=bio_obj, token=token, refresh_token=refresh_token)
-    
 class UpdateUser(graphene.Mutation):
     user = graphene.Field(UserType)
     updated = graphene.Boolean()
@@ -149,10 +179,13 @@ class UpdateUserBio(graphene.Mutation):
         user.save()
         return UpdateUserBio(updated=True, user=user)
 class Mutation(graphene.ObjectType):
+    register_user = RegisterUser.Field()
+    verify_email = VerifyEmail.Field()
     token_auth = graphql_jwt.ObtainJSONWebToken.Field()
     verify_token = graphql_jwt.Verify.Field()
     refresh_token = graphql_jwt.Refresh.Field()
-    create_user = CreateUser.Field()
+    revoke_token = graphql_jwt.Revoke.Field()
+    #create_user = CreateUser.Field()
     update_user = UpdateUser.Field()
     delete_user = DeleteUser.Field()
     create_user_bio = CreateUserBio.Field()
