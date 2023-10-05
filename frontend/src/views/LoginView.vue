@@ -1,14 +1,12 @@
 <template>
 	<div class="q-pa-md row justify-center align-center" style=".max-width: 400px">
 		<div class="col-10 col-md-4 col-lg-4">
+		
 			<q-form
-				@submit="onSubmit"
-				@reset="onReset"
 				class="q-gutter-md"
+				@submit.prevent="login()"
 			>
-				
 				<q-input
-				filled
 				v-model="username"
 				label="Your Username *"
 				hint="Enter a Valid Username"
@@ -20,66 +18,56 @@
 				filled
 				type="password"
 				v-model="password"
-				label="Your DOB *"
+				label="Your Password *"
 				lazy-rules
-				:rules="[
-					val => val !== null && val !== '' || 'Please type your age',
-					val => val > 0 && val < 100 || 'Please type a real age'
-				]"
+				:rules="[ val => val && val.length > 0 || 'Please type something']"				
 				/>
-				
 				<div>
-				<q-btn label="Submit" type="submit" color="primary" class="center"/>
+				<q-btn label="Login" type="submit" color="primary" class="center"/>
 				</div>
 			</q-form>
-  
+			
 		</div>
-	  
 	</div>
   </template>
   
   <script>
-  import { useQuasar } from 'quasar'
-  import { ref } from 'vue'
-  
-  export default {
-	setup () {
-	  const $q = useQuasar()
-  
-	  const name = ref(null)
-	  const age = ref(null)
-	  const accept = ref(false)
-  
-	  return {
-		name,
-		age,
-		accept,
-  
-		onSubmit () {
-		  if (accept.value !== true) {
-			$q.notify({
-			  color: 'red-5',
-			  textColor: 'white',
-			  icon: 'warning',
-			  message: 'You need to accept the license and terms first'
-			})
-		  }
-		  else {
-			$q.notify({
-			  color: 'green-4',
-			  textColor: 'white',
-			  icon: 'cloud_done',
-			  message: 'Submitted'
-			})
-		  }
-		},
-  
-		onReset () {
-		  name.value = null
-		  age.value = null
-		  accept.value = false
-		}
-	  }
-	}
-  }
+  import { ref } from 'vue';
+  import gql from "graphql-tag";
+  import { useMutation, useApolloClient } from "@vue/apollo-composable";
+  import { useAuthStore } from '@/stores/auth';
+
+  const LOGIN_MUTATION = gql`
+			mutation tokenAuth($username: String!, $password: String!){
+				tokenAuth(username: $username, password: $password){
+					payload
+					token
+					refreshExpiresIn
+				}
+			}`;
+
+export default {
+  setup() {
+    const username = ref('');
+    const password = ref('');
+    const { mutate: loginMutation } = useMutation(LOGIN_MUTATION);
+	const user = useAuthStore();
+	console.log(user.isAuthenticated)
+    const login = async () => {
+      try {
+        const { data } = await loginMutation({
+          username: username.value,
+          password: password.value,
+        });
+		console.log(data.tokenAuth.token)
+        const token = data.tokenAuth.token;
+        // Store the token or redirect the user as needed
+      } catch (error) {
+        alert('Login failed:');
+      }
+    };
+
+    return { username, password, login };
+  },
+};
   </script>  

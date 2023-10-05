@@ -13,12 +13,12 @@
         <q-btn dense flat round icon="menu" @click="toggleRightDrawer" />
       </q-toolbar>
 
-      <q-tabs align="left">
+      <q-tabs align="center">
         <q-route-tab to="/" label="Home" />
-        <q-route-tab to="/profile" label="Search" />
-        <q-route-tab to="/profile" label="Connect" />
+        <q-route-tab to="/about" label="Search" />
+        <q-route-tab to="/about" label="Connect" />
         <q-route-tab to="/about" label="Notification" />
-        <q-route-tab to="/about" label="Profile" />
+        <q-route-tab to="/about" label="about" />
       </q-tabs>
     </q-header>
 

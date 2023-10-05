@@ -4,18 +4,21 @@ import RegisterView from '../views/RegisterView.vue'
 import LoginView from '../views/LoginView.vue'
 import ProfileView from '../views/ProfileView.vue'
 import EditProfileView from "../views/EditProfileView.vue"
+import { useAuthStore } from '@/stores/auth';
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
       name: 'home',
-      component: HomeView
+      component: HomeView,
+      meta: { requiresAuth: true },
     },
     {
       path: '/<user_id>',
       name: 'profile',
-      component: ProfileView
+      component: ProfileView,
+      meta: { requiresAuth: true },
     },
     {
       path: '/login',
@@ -30,17 +33,22 @@ const router = createRouter({
     {
       path: '/<user_id>/edit',
       name: 'edit-profile',
-      component: EditProfileView
+      component: EditProfileView,
+      meta: { requiresAuth: true },
     },
     {
       path: '/about',
       name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
       component: () => import('../views/AboutView.vue')
     }
   ]
 })
 
 export default router
+router.beforeEach((to, from, next) => {
+  if (to.meta.requiresAuth && !useAuthStore().isAuthenticated) {
+    next('/login');
+  } else {
+    next();
+  }
+});

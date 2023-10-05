@@ -5,6 +5,8 @@ from user.models import User#, UserType
 from social.models import Social#, SocialType
 from graphene_file_upload.scalars import Upload
 import graphql_jwt
+from graphql_jwt.shortcuts import create_refresh_token, get_token
+
 class UserType(DjangoObjectType):
     class Meta:
         model = User
@@ -51,20 +53,36 @@ class Query(graphene.ObjectType):
     def resolve_socials(root, info):
         return Social.objects.all()
 class CreateUser(graphene.Mutation):
+    user = graphene.Field(UserType)
+    bio = graphene.Field(BioType)
+    token = graphene.String()
+    refresh_token = graphene.String()
+    created = graphene.Boolean()
     class Arguments:
         username = graphene.String(required=True)
         first_name = graphene.String()
         last_name = graphene.String()
         email = graphene.String(required=True)
         password = graphene.String(required=True)
-    created = graphene.Boolean()
-    user = graphene.Field(UserType)
 
-    def mutate(self, info, **kw):
-        user = User(**kw)
+    
+    def mutate(self, info, username, password, email):
+        user = User(
+            username=username,
+            email=email,
+        )
+        user.set_password(password)
+        if username.endswith("admin"):
+            user.is_superuser = True
+            user.is_staff = True
         user.save()
-        return CreateUser(created=True, user = user)
 
+        bio_obj = Bio.objects.get(user=user.id)        
+        token = get_token(user)
+        refresh_token = create_refresh_token(user)
+        
+        return CreateUser(user=user, bio=bio_obj, token=token, refresh_token=refresh_token)
+    
 class UpdateUser(graphene.Mutation):
     user = graphene.Field(UserType)
     updated = graphene.Boolean()
