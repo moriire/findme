@@ -1,5 +1,5 @@
 <template>
-	<div class="q-pa-md row justify-center align-center" style=".max-width: 400px">
+	<div class="q-pa-md row justify-center align-center" style="height:80vh; align-items: center;">
 		<div class="col-10 col-md-4 col-lg-4">
 		
 			<q-form
@@ -34,6 +34,7 @@
   <script>
   import { ref } from 'vue';
   import gql from "graphql-tag";
+  import { useQuasar } from 'quasar'
   import { useMutation, useApolloClient } from "@vue/apollo-composable";
   import { useAuthStore } from '@/stores/auth';
 
@@ -48,6 +49,7 @@
 
 export default {
   setup() {
+	const $q = useQuasar();
     const username = ref('');
     const password = ref('');
     const { mutate: loginMutation } = useMutation(LOGIN_MUTATION);
@@ -61,9 +63,11 @@ export default {
         });
 		console.log(data.tokenAuth.token)
         const token = data.tokenAuth.token;
+		$q.notify("login Successful")
         // Store the token or redirect the user as needed
       } catch (error) {
-        alert('Login failed:');
+		$q.notify("login failed")
+        //alert('Login failed:');
       }
     };
 

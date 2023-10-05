@@ -3,9 +3,9 @@ import { createPinia } from 'pinia';
 import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client/core'
 import { DefaultApolloClient } from '@vue/apollo-composable'
 
+import { Quasar, Notify } from 'quasar'
 import App from './App.vue'
 import router from './router'
-import { Quasar } from 'quasar'
 import '@quasar/extras/material-icons/material-icons.css'
 import 'quasar/src/css/index.sass'
 
@@ -24,7 +24,12 @@ app.provide(DefaultApolloClient, apolloClient);
 
 app.use(createPinia())
 app.use(Quasar, {
-  plugins: {},
+  plugins: {
+    Notify
+  },
+  config: {
+    //notify: /* look at QuasarConfOptions from the API card */
+  }
 })
 app.use(router)
 app.mount('#app')
