@@ -2,16 +2,26 @@
 	<div class="q-pa-md row justify-center" style="height:80vh; align-items: center;">
 		<div class="col-10 col-md-6 col-lg-4">
 			<q-form
-				@submit.prevent="onRegister"
+				@submit="register"
 				class="q-gutter-md"
 			>
 			<div class="row">
-				<div class="col-12 col-sm-10 col-md-12">
+				<div class="col-md-6 col-sm-10 col-xs-12">
 				<q-input
 				filled
-				v-model="name"
-				label="Your Full Name *"
-				hint="Name and surname"
+				v-model="firstName"
+				label="Your First Name *"
+				hint="First Name"
+				lazy-rules
+				:rules="[ val => val && val.length > 0 || 'Please type something']"
+				/>
+			</div>
+			<div class="col-md-6 col-sm-10 col-xs-12">
+				<q-input
+				filled
+				v-model="lastName"
+				label="Your Surname *"
+				hint="lastName"
 				lazy-rules
 				:rules="[ val => val && val.length > 0 || 'Please type something']"
 				/>
@@ -97,27 +107,39 @@
   import { useAuthStore } from '@/stores/auth';
 
   const REGISTER_MUTATION = gql`
-		mutation {
-		registerUser(email:"support@riire.co.cc", username: "riire", password: "riire"){
-		success
-		}
-		}
-  `;
+		mutation registerUser($email: String!, $firstName: String, $lastName: String, $password: String!, $username: String!){
+			registerUser(
+				email:$email,
+				username: $username, 
+				password: $password, 
+				firstName: $firstName, 
+				lastName:$lastName
+			){
+				success
+				user{
+					username
+					firstName
+					lastName
+					id
+					email
+				}
+			}
+		}`;
   
 export default {
   setup() {
 	const $q = useQuasar();
     const username = ref('');
 	const email = ref("");
-	const name = ref("");
-	const {firstName, lastName} = name.value.split(" ") || " ";
+	const firstName = ref("");
+	const lastName = ref("");
     const password = ref('');
-    const { mutate: loginMutation } = useMutation(REGISTER_MUTATION);
+    const { mutate: signupMutation } = useMutation(REGISTER_MUTATION);
 	const user = useAuthStore();
 	console.log(user.isAuthenticated)
-    const onRegister = async () => {
+    const register = async () => {
       try {
-        const { data } = await loginMutation({
+        const { data } = await signupMutation({
           username: username.value,
 		  email: email.value,
 		  firstName: firstName.value,
@@ -126,15 +148,21 @@ export default {
         });
 		console.log(data)
         //const token = data.tokenAuth.token;
-		$q.notify("login Successful")
+		$q.notify("Signup Successful")
         // Store the token or redirect the user as needed
       } catch (error) {
-		console.log(error)
-		$q.notify("login failed")
+		console.log(JSON.stringify(error))
+		$q.notify("signup failed")
       }
     };
 
-    return { username, password, onRegister };
+    return { email,
+			firstName,
+			lastName,
+			username, 
+			password,
+			register 
+			};
   },
 };
   </script>  

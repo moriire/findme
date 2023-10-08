@@ -34,8 +34,8 @@ INSTALLED_APPS = [
     "social.apps.SocialConfig",
     "graphene_django",
     "graphql_jwt",
-    #"graphql_jwt.refresh_token",
-    
+    "graphql_jwt.refresh_token",
+    "circle",
 ]
 
 MIDDLEWARE = [
@@ -49,6 +49,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "whitenoise.middleware.WhiteNoiseMiddleware",
+    
 ]
 
 ROOT_URLCONF = 'backend.urls'

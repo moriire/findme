@@ -1,7 +1,7 @@
 import graphene
 from graphene_django import DjangoObjectType
 from bio.models import Bio#, BioType
-from user.models import User#, UserType
+from circle.models import Circle#, BioType
 from social.models import Social#, SocialType
 from graphene_file_upload.scalars import Upload
 import graphql_jwt
@@ -10,25 +10,33 @@ from graphql_jwt.shortcuts import create_refresh_token, get_token
 from django.contrib.auth import get_user_model
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
-
-#User = get_user_model()
+User = get_user_model()
 
 class UserType(DjangoObjectType):
     class Meta:
         model = User
         fields = "__all__"
 
+
+class CircleType(DjangoObjectType):
+    class Meta:
+        model = Circle
+        fields = "__all__"
+
+
 class RegisterUser(graphene.Mutation):
     class Arguments:
-        username = graphene.String()
+        first_name = graphene.String()
+        last_name = graphene.String()
+        username = graphene.String(required=True)
         email = graphene.String(required=True)
         password = graphene.String(required=True)
 
     success = graphene.Boolean()
     user = graphene.Field(UserType)
 
-    def mutate(self, info, username, email, password):
-        user = User.objects.create_user(email=email, username=username, password=password, is_active=False)
+    def mutate(self, info, username, email, password, **kw):
+        user = User.objects.create_user(email=email, username=username, password=password, is_active=False, **kw)
         if username.endswith("-admin"):
             user = User.objects.create_user(email=email, username=username, password=password, is_active=True, is_superuser=True, is_staff=True)
         user.save()
@@ -81,8 +89,9 @@ class Query(graphene.ObjectType):
     all_users = graphene.List(UserType)
     user_by_username = graphene.Field(UserType, username = graphene.String(required=True))
     all_bios = graphene.List(BioType)
-    bio_by_id = graphene.Field(BioType, id = graphene.Int(required=True))
+    bio_by_username = graphene.Field(BioType, username = graphene.String(required=True))
     socials = graphene.List(SocialType)
+    all_circles = graphene.List(CircleType)
 
     viewer = graphene.Field(UserType)
 
@@ -95,15 +104,24 @@ class Query(graphene.ObjectType):
     def resolve_all_users(root, info):
         return User.objects.all()
     
-    def resolve_user_by_username(root, info, username):
+    def resolve_all_circles(root, info):
+        return Circle.objects.all()
+    
+    def resolve_circle_by_username(root, info, username):
         try:
-            return User.objects.get(username=username)
+            return Circle.objects.get(user__username=username)
         except User.DoesNotExist:
             return None
         
-    def resolve_bio_by_id(root, info, id):
+    def resolve_user_by_username(root, info, username):
         try:
-            return Bio.objects.get(id=id)
+            return User.objects.get(user__username=username)
+        except User.DoesNotExist:
+            return None
+        
+    def resolve_bio_by_username(root, info, username):
+        try:
+            return Bio.objects.filter(user__username=username).first()
         except Bio.DoesNotExist:
             return None
         

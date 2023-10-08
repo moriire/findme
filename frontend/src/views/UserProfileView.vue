@@ -4,10 +4,13 @@ import { useQuery } from "@vue/apollo-composable";
 import { useRoute } from 'vue-router'
 
 const USER_QUERY = gql`
-					query {
+				query {
 					bioByUsername(username: "username"){
 						user{
 						username
+						lastName
+						firstName
+						isActive
 						id
 						}
 						img
@@ -15,15 +18,20 @@ const USER_QUERY = gql`
 					}
 					}`;
 export default {
-  name: 'ProfileView',
-  setup () {
+  name: 'UserProfileView',
+  setup() {
     const route = useRoute();
-    //console.log(route.params)
+	const { result, loading, error  } = useQuery(USER_QUERY, {
+  variables: { username: route.params.user_id },
+});
+console.log(error.networkError);
+console.log(JSON.stringify(error))//, null, 2));
+/*
     const { result, loading, error } = useQuery(USER_QUERY, {
         variables: {
             username: route.params.user_id
         }
-    });
+    });*/
 	return {
       route,
       result,
@@ -37,8 +45,8 @@ export default {
 <template>
 <div class="q-pa-md row justify-center">
 	<div class="col-lg-8 col-md-10">
-{{ error }}
-	
+
+	{{ route.params.user_id }}
 	<q-circular-progress
 			
 			font-size="12px"
@@ -62,10 +70,11 @@ export default {
 		  <q-item-section class="align-start">
 			<div class="column">
 				<h3>
-					{{ result }}
+					{{ error }}
 				</h3>
 				<p>{{ result }}</p>
 			</div>
+			
 		</q-item-section>
 		</q-item>
 	  </q-list>

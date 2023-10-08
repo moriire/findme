@@ -3,12 +3,15 @@ import gql from "graphql-tag";
 import { useQuery } from "@vue/apollo-composable";
 
 const USERS_QUERY = gql`query {
-	bios {
+	allBios {
 		body
 		user{
 			id
         	username
+			firstName
+			lastName
 		}
+		img
     }
   }`;
 export default {
@@ -44,7 +47,7 @@ export default {
     </q-circular-progress>
 	  <q-list bordered v-else>
 		<q-separator />
-		<q-item clickable v-ripple v-for="user in result.bios">
+		<q-item clickable v-ripple v-for="user in result.allBios">
 			
 		  <q-item-section thumbnail >
 
@@ -56,6 +59,7 @@ export default {
 					{{ user.user.username }}
 				</h3>
 				<p>{{ user.body }}</p>
+				<router-link :to="{'name': 'profile', 'params': {'user_id':`${user.user.username}`}}">view</router-link>
 			</div>
 			
 		</q-item-section>
