@@ -159,6 +159,27 @@ class DeleteUser(graphene.Mutation):
         user = User.objects.get(id=id)
         user.delete()
         return DeleteUser(deleted = True, user=user)
+    
+   
+class CreateUserCircle(graphene.Mutation):
+    created = graphene.Boolean()
+    user_circle = graphene.Field(CircleType)
+    class Arguments:
+        user_id = graphene.String(required=True)
+        profession = graphene.String()
+        project_title = graphene.String()
+        project_description = graphene.String()
+
+    def mutate(self, info, user_id, project_title, project_description):
+        user = User.objects.get(id = user_id)
+        user_bio = Circle(
+            user = user,
+            project_title = project_title,
+            project_description = project_description
+        )
+        user_bio.save()
+        return CreateUserBio(created = True, user_bio=user_bio)
+    
 class CreateUserBio(graphene.Mutation):
     created = graphene.Boolean()
     user_bio = graphene.Field(BioType)
@@ -166,6 +187,7 @@ class CreateUserBio(graphene.Mutation):
         body  =  graphene.String()
         user_id = graphene.Int()
         img = Upload()
+
 
     def mutate(self, info, user_id, body):
         user = User.objects.get(id = user_id)
