@@ -172,13 +172,13 @@ class CreateUserCircle(graphene.Mutation):
 
     def mutate(self, info, user_id, project_title, project_description):
         user = User.objects.get(id = user_id)
-        user_bio = Circle(
+        user_circle = Circle(
             user = user,
             project_title = project_title,
             project_description = project_description
         )
-        user_bio.save()
-        return CreateUserBio(created = True, user_bio=user_bio)
+        user_circle.save()
+        return CreateUserCircle(created = True, user_circle=user_circle)
     
 class CreateUserBio(graphene.Mutation):
     created = graphene.Boolean()
