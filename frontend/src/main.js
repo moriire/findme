@@ -2,7 +2,7 @@ import { createApp, provide, h } from 'vue';
 import { createPinia } from 'pinia';
 import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client/core'
 import { DefaultApolloClient } from '@vue/apollo-composable'
-
+//const { createUploadLink } = require('apollo-upload-client')
 import { Quasar, Notify } from 'quasar'
 import App from './App.vue'
 import router from './router'
@@ -18,6 +18,7 @@ const cache = new InMemoryCache()
 const apolloClient = new ApolloClient({
     link: httpLink,
     cache: cache,
+    
 })
 const app = createApp(App);
 app.provide(DefaultApolloClient, apolloClient);

@@ -1,6 +1,7 @@
 import graphene
 from graphene_django import DjangoObjectType
 from bio.models import Bio#, BioType
+from photo.models import Photo
 from circle.models import Circle#, BioType
 from social.models import Social#, SocialType
 from graphene_file_upload.scalars import Upload
@@ -17,6 +18,11 @@ class UserType(DjangoObjectType):
         model = User
         fields = "__all__"
 
+
+class UploadType(DjangoObjectType):
+    class Meta:
+        model = Photo
+        fields = ("img",)
 
 class CircleType(DjangoObjectType):
     class Meta:
@@ -218,6 +224,23 @@ class UpdateUserBio(graphene.Mutation):
                 user.img = img
         user.save()
         return UpdateUserBio(updated=True, user=user)
+
+class UploadBioImage(graphene.Mutation):
+    img = graphene.Field(UploadType)
+    success = graphene.Boolean()
+    class Arguments:
+        img = Upload(required=True)#Upload(required=True)
+        user = graphene.ID(required=True)
+
+    def mutate(self,  info, img, user):
+        user_instance = User.objects.get(id=user)
+        pic = Photo.objects.create(
+            user=user_instance,
+            img = img
+        )
+        pic.save()
+        return UploadBioImage(img=pic, success=True)
+    
 class Mutation(graphene.ObjectType):
     register_user = RegisterUser.Field()
     verify_email = VerifyEmail.Field()
@@ -226,6 +249,7 @@ class Mutation(graphene.ObjectType):
     refresh_token = graphql_jwt.Refresh.Field()
     revoke_token = graphql_jwt.Revoke.Field()
     #create_user = CreateUser.Field()
+    upload_image = UploadBioImage.Field()
     update_user = UpdateUser.Field()
     delete_user = DeleteUser.Field()
     create_user_bio = CreateUserBio.Field()

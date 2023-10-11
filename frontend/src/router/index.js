@@ -6,6 +6,7 @@ import ProfileView from '../views/ProfileView.vue'
 import EditProfileView from "../views/EditProfileView.vue"
 import UserProfileView from "@/views/UserProfileView.vue"
 import { useAuthStore } from '@/stores/auth';
+import UploadView from "@/views/UploadView.vue";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -19,6 +20,12 @@ const router = createRouter({
       path: '/me',
       name: 'myProfile',
       component: ProfileView,
+      //meta: { requiresAuth: true },
+    },
+    {
+      path: '/upload',
+      name: 'image-upload',
+      component: UploadView,
       //meta: { requiresAuth: true },
     },
     {
