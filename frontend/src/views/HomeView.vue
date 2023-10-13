@@ -11,7 +11,6 @@ const USERS_QUERY = gql`query {
 			firstName
 			lastName
 		}
-		img
     }
   }`;
 export default {
@@ -31,7 +30,7 @@ export default {
 <template>
 <div class="q-pa-md row justify-center">
 	<div class="col-lg-8 col-md-10">
-
+{{ result }}
 	
 	<q-circular-progress
 			

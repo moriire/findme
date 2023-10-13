@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 class Photo(models.Model):
-    user = models.OneToOneField(User, related_name="user_photo", on_delete=models.CASCADE)
+    user = models.ForeignKey(User, related_name="user_photo", on_delete=models.CASCADE)
     img = models.ImageField()
     created_on = models.DateTimeField(auto_now=True)
 

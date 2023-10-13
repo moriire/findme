@@ -13,7 +13,7 @@
 
   export default {
     setup() {
-      const username = ref("");
+      const user = ref("");
       const img = ref(null);
       const { mutate } = useMutation(
         //UPLOAD_IMAGE_MUTATION
