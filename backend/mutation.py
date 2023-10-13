@@ -6,6 +6,17 @@ from graphql_jwt.shortcuts import create_refresh_token, get_token
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 
+
+def handle_uploaded_file(f):
+    with open("some/file/name.txt", "wb+") as destination:
+        for chunk in f.chunks():
+            destination.write(chunk)
+
+def upload_file(request):
+    if request.method == "POST":
+        handle_uploaded_file(request.FILES["file"])
+        return True
+    
 class RegisterUser(graphene.Mutation):
     class Arguments:
         first_name = graphene.String()
