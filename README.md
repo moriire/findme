@@ -2,9 +2,9 @@
 
 ## Frontend
 - **Tech Stack**:
-  - Vite
-  - Vue 3
-  - Apollo
+  - [Vite](https://vitejs.dev/) for a fast development environment
+  - [Vue 3](https://v3.vuejs.org/) for building user interfaces
+  - [Apollo Client](https://www.apollographql.com/docs/react/) for GraphQL communication
 
 ## Backend
 - **Tech Stack**:
