@@ -25,4 +25,10 @@ The backend is powered by Django, GraphQL, Graphene, and PostgreSQL. This robust
 ## Docker and Docker-Compose
 The "findme" project includes Docker and Docker-Compose configurations to facilitate easy deployment and containerization. With these tools, you can easily set up the project environment and scale it as needed.
 
+## Getting Started
+1. Clone this repository: `git clone https://github.com/yourusername/findme.git`
+2. Build and run the Docker containers using Docker Compose:
+   ```shell
+   docker-compose up
+
 This Markmin document provides an overview of the "findme" project and its technical components. For more details, please check the project's repository on GitHub.
