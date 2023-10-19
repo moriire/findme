@@ -8,11 +8,12 @@
 
 ## Backend
 - **Tech Stack**:
-  - Django
-  - GraphQL
-  - Graphene
-  - PostgreSQL
-
+  
+- [Django](https://www.djangoproject.com/) for web framework
+  - [GraphQL](https://graphql.org/) for flexible API queries
+  - [Graphene](https://graphene-python.org/) for connecting Django and GraphQL
+  - [PostgreSQL](https://www.postgresql.org/) for the database
+    
 ## Description
 "findme" is a web application that provides a modern and efficient way to connect users with information. The project is divided into two main components: the frontend and the backend.
 
