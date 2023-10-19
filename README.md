@@ -9,7 +9,7 @@
 ## Backend
 - **Tech Stack**:
   
-- [Django](https://www.djangoproject.com/) for web framework
+  - [Django](https://www.djangoproject.com/) for web framework
   - [GraphQL](https://graphql.org/) for flexible API queries
   - [Graphene](https://graphene-python.org/) for connecting Django and GraphQL
   - [PostgreSQL](https://www.postgresql.org/) for the database
