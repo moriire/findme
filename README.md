@@ -23,12 +23,6 @@ The backend is powered by Django, GraphQL, Graphene, and PostgreSQL. This robust
   - Gunicorn: A Python Web Server Gateway Interface (WSGI) HTTP server.
   - Nginx: A high-performance web server and reverse proxy server.
 
-### Frontend
-The frontend of "findme" is built using Vite, Vue 3, and Apollo. These technologies ensure a responsive and user-friendly experience, enabling seamless interactions and data retrieval.
-
-### Backend
-The backend is powered by Django, GraphQL, Graphene, and PostgreSQL. This robust combination allows for flexible data management and efficient queries, making it an ideal choice for handling the application's data and logic.
-
 ## Docker and Docker-Compose
 The "findme" project includes Docker and Docker-Compose configurations to facilitate easy deployment and containerization. With these tools, you can easily set up the project environment and scale it as needed.
 
