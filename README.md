@@ -19,7 +19,11 @@ The backend is powered by Django, GraphQL, Graphene, and PostgreSQL. This robust
   - [Graphene](https://graphene-python.org/) for connecting Django and GraphQL
   - [PostgreSQL](https://www.postgresql.org/) for the database
 
- ## Deployment:
+## Containerization:
+  - Docker: For creating, deploying, and running applications in containers.
+  - Docker Compose: For defining and running multi-container Docker applications.
+
+## Deployment:
   - Gunicorn: A Python Web Server Gateway Interface (WSGI) HTTP server.
   - Nginx: A high-performance web server and reverse proxy server.
 
