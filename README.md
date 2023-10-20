@@ -9,6 +9,9 @@
   - [Apollo Client](https://www.apollographql.com/docs/react/) for GraphQL communication
 
 ## Backend
+
+The backend is powered by Django, GraphQL, Graphene, and PostgreSQL. This robust combination allows for flexible data management and efficient queries, making it an ideal choice for handling the application's data and logic.
+
 - **Tech Stack**:
   
   - [Django](https://www.djangoproject.com/) for web framework
