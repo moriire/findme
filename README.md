@@ -20,12 +20,12 @@ The backend is powered by Django, GraphQL, Graphene, and PostgreSQL. This robust
   - [PostgreSQL](https://www.postgresql.org/) for the database
 
 ## Containerization:
+This project includes Docker and Docker-Compose configurations to facilitate easy deployment and containerization. With these tools, you can easily set up the project environment and scale it as needed.
+
   - Docker: For creating, deploying, and running applications in containers.
   - Docker Compose: For defining and running multi-container Docker applications.
 
 ## Deployment:
-This project includes Docker and Docker-Compose configurations to facilitate easy deployment and containerization. With these tools, you can easily set up the project environment and scale it as needed.
-
   - Gunicorn: A Python Web Server Gateway Interface (WSGI) HTTP server.
   - Nginx: A high-performance web server and reverse proxy server.
 
