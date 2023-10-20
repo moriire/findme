@@ -29,10 +29,28 @@ This project includes Docker and Docker-Compose configurations to facilitate eas
   - Gunicorn: A Python Web Server Gateway Interface (WSGI) HTTP server.
   - Nginx: A high-performance web server and reverse proxy server.
 
-## Getting Started
-1. Clone this repository: `git clone https://github.com/yourusername/findme.git`
-2. Build and run the Docker containers using Docker Compose:
-   ```shell
-   docker-compose up
 
-This Markmin document provides an overview of the "findme" project and its technical components. For more details, please check the project's repository on GitHub.
+## Installation
+1. Clone the repository: `git clone https://github.com/moriire/findme.git`
+2. Frontend Setup:
+   - Navigate to the frontend directory: `cd findme/frontend`
+   - Install dependencies: `yarn install`
+   - Start the development server: `yarn dev`
+3. Backend Setup:
+   - Navigate to the backend directory: `cd findme/backend`
+   - Install Python dependencies: `pip install -r requirements.txt`
+   - Apply database migrations: `python manage.py migrate`
+   - Start the Django development server: `python manage.py runserver`
+4. Docker Compose (Production):
+   - From the project root, run: `docker-compose up -d`
+
+## Usage
+- Frontend: Access the frontend in your browser at `http://localhost:3000`.
+- Backend: Access the backend at `http://localhost:8000/graphql`.
+- Production Deployment: Configure Nginx to serve the application on a domain of your choice.
+
+## Contribution
+- We welcome contributions! Feel free to submit pull requests and open issues.
+
+## License
+This project is licensed under the MIT License. See the LICENSE file for details.
