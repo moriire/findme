@@ -1,5 +1,7 @@
 # Project: findme
 
+"findme" is a web application that provides a modern and efficient way to connect users with information. The project is divided into two main components: the frontend and the backend.
+
 ## Frontend
 - **Tech Stack**:
   - [Vite](https://vitejs.dev/) for a fast development environment
@@ -13,9 +15,10 @@
   - [GraphQL](https://graphql.org/) for flexible API queries
   - [Graphene](https://graphene-python.org/) for connecting Django and GraphQL
   - [PostgreSQL](https://www.postgresql.org/) for the database
-    
-## Description
-"findme" is a web application that provides a modern and efficient way to connect users with information. The project is divided into two main components: the frontend and the backend.
+
+ ## Deployment:
+  - Gunicorn: A Python Web Server Gateway Interface (WSGI) HTTP server.
+  - Nginx: A high-performance web server and reverse proxy server.
 
 ### Frontend
 The frontend of "findme" is built using Vite, Vue 3, and Apollo. These technologies ensure a responsive and user-friendly experience, enabling seamless interactions and data retrieval.
