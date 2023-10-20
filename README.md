@@ -24,11 +24,10 @@ The backend is powered by Django, GraphQL, Graphene, and PostgreSQL. This robust
   - Docker Compose: For defining and running multi-container Docker applications.
 
 ## Deployment:
+This project includes Docker and Docker-Compose configurations to facilitate easy deployment and containerization. With these tools, you can easily set up the project environment and scale it as needed.
+
   - Gunicorn: A Python Web Server Gateway Interface (WSGI) HTTP server.
   - Nginx: A high-performance web server and reverse proxy server.
-
-## Docker and Docker-Compose
-The "findme" project includes Docker and Docker-Compose configurations to facilitate easy deployment and containerization. With these tools, you can easily set up the project environment and scale it as needed.
 
 ## Getting Started
 1. Clone this repository: `git clone https://github.com/yourusername/findme.git`
